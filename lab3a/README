@@ -1,0 +1,6 @@
+name: Hanci Lyu
+UID: 004617230
+
+# File descriptions
+* lab3a.c is the C source code
+* Makefile is used to built the program and distribution tarball

@@ -1,0 +1,405 @@
+name: Hanci Lyu
+UID: 004617230
+
+# File descriptions
+* lab2c.c is the C source code
+* SortedList.h and SortedList.c define and implement the doubly linked list functions
+* Makefile is used to built the program and distribution tarball
+* first_graph.png is the graph that shows the average time per operation vs the threads per list ratio
+
+# Question answers
+## Q2C.1A
+The average cost goes up as the number of threads per list increases. The first reason is that as the ratio increases, the possibility of contention between threads also increases. The second reason is that as the ratio increases, the size of a sublist increases, so the average cost per operation (insert/lookup) also increases.
+
+
+## Q2C.1B
+Because the threads per list ratio represents the degree of contention.
+
+# Time report
+* '% time' is the percentage of the total running time 
+* 'num calls' is the number of calls of a function
+* 'time/call' is the time spent on each function per call
+* "function name" is the name of the reported function
+* Note that in the unprotected case, the calls for 'lock' 
+and 'unlock' did nothing, it's just for programming convenience
+-------------------------------------------
+## unprotected (10k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+70.16 |  10000 |  14.03 | SortedList_lookup
+30.07 |  10000 |   6.01 | SortedList_insert
+ 0.00 |  20001 |   0.00 | lock
+ 0.00 |  20001 |   0.00 | unlock
+ 0.00 |  20000 |   0.00 | hash
+ 0.00 |  10000 |   0.00 | SortedList_delete
+ 0.00 |  10000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (20k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+68.91 |  20000 |  27.56 | SortedList_lookup
+30.07 |  20000 |  12.03 | SortedList_insert
+ 0.00 |  40001 |   0.00 | lock
+ 0.00 |  40001 |   0.00 | unlock
+ 0.00 |  40000 |   0.00 | hash
+ 0.00 |  20000 |   0.00 | SortedList_delete
+ 0.00 |  20000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (30k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+71.68 |  30000 |  37.75 | SortedList_lookup
+28.55 |  30000 |  15.03 | SortedList_insert
+ 0.00 |  60001 |   0.00 | lock
+ 0.00 |  60001 |   0.00 | unlock
+ 0.00 |  60000 |   0.00 | hash
+ 0.00 |  30000 |   0.00 | SortedList_delete
+ 0.00 |  30000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (40k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+72.76 |  40000 |  51.12 | SortedList_lookup
+26.75 |  40000 |  18.79 | SortedList_insert
+ 0.71 |  80000 |   0.25 | hash
+ 0.00 |  80001 |   0.00 | lock
+ 0.00 |  80001 |   0.00 | unlock
+ 0.00 |  40000 |   0.00 | SortedList_delete
+ 0.00 |  40000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (50k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+70.08 |  50000 |  71.76 | SortedList_lookup
+29.95 |  50000 |  30.67 | SortedList_insert
+ 0.00 | 100001 |   0.00 | lock
+ 0.00 | 100001 |   0.00 | unlock
+ 0.00 | 100000 |   0.00 | hash
+ 0.00 |  50000 |   0.00 | SortedList_delete
+ 0.00 |  50000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (60k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+75.13 |  60000 |  77.01 | SortedList_lookup
+25.10 |  60000 |  25.73 | SortedList_insert
+ 0.00 | 120001 |   0.00 | lock
+ 0.00 | 120001 |   0.00 | unlock
+ 0.00 | 120000 |   0.00 | hash
+ 0.00 |  60000 |   0.00 | SortedList_delete
+ 0.00 |  60000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (70k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+77.18 |  70000 | 103.09 | SortedList_lookup
+22.94 |  70000 |  30.64 | SortedList_insert
+ 0.00 | 140001 |   0.00 | lock
+ 0.00 | 140001 |   0.00 | unlock
+ 0.00 | 140000 |   0.00 | hash
+ 0.00 |  70000 |   0.00 | SortedList_delete
+ 0.00 |  70000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (80k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+70.67 |  80000 | 101.86 | SortedList_lookup
+29.43 |  80000 |  42.41 | SortedList_insert
+ 0.09 | 160001 |   0.06 | lock
+ 0.04 |  80000 |   0.06 | SortedList_delete
+ 0.00 | 160001 |   0.00 | unlock
+ 0.00 | 160000 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (90k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+71.56 |  90000 | 120.38 | SortedList_lookup
+28.66 |  90000 |  48.22 | SortedList_insert
+ 0.00 | 180001 |   0.00 | lock
+ 0.00 | 180001 |   0.00 | unlock
+ 0.00 | 180000 |   0.00 | hash
+ 0.00 |  90000 |   0.00 | SortedList_delete
+ 0.00 |  90000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## unprotected (100k iterations, 1 thread)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+76.87 | 100000 | 129.59 | SortedList_lookup
+23.30 | 100000 |  39.29 | SortedList_insert
+ 0.06 | 200000 |   0.05 | hash
+ 0.00 | 200001 |   0.00 | lock
+ 0.00 | 200001 |   0.00 | unlock
+ 0.00 | 100000 |   0.00 | SortedList_delete
+ 0.00 | 100000 |   0.00 | rand_key
+ 0.00 |      2 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## mutex (10k iterations, 8 threads, 1 list)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+72.71 |  80000 |  80.43 | SortedList_lookup
+27.29 |  79977 |  30.20 | SortedList_insert
+ 0.11 | 159961 |   0.06 | hash
+ 0.00 | 159995 |   0.00 | unlock
+ 0.00 | 159978 |   0.00 | lock
+ 0.00 |  80000 |   0.00 | SortedList_delete
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |      9 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## mutex (10k iterations, 8 threads, 2 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+73.31 |  79701 |  59.61 | SortedList_lookup
+26.91 |  79532 |  21.93 | SortedList_insert
+ 0.00 | 159376 |   0.00 | lock
+ 0.00 | 159177 |   0.00 | hash
+ 0.00 | 159146 |   0.00 | unlock
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  79769 |   0.00 | SortedList_delete
+ 0.00 |     18 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## mutex (10k iterations, 8 threads, 4 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+71.50 |  78540 |  29.86 | SortedList_lookup
+26.58 |  77960 |  11.18 | SortedList_insert
+ 1.22 | 156716 |   0.26 | lock
+ 0.31 |     36 | 278.41 | SortedList_length
+ 0.00 | 156193 |   0.00 | hash
+ 0.00 | 155970 |   0.00 | unlock
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  78536 |   0.00 | SortedList_delete
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## mutex (10k iterations, 8 threads, 8 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+67.80 |  75531 |  15.26 | SortedList_lookup
+32.43 |  74637 |   7.39 | SortedList_insert
+ 0.00 | 150859 |   0.00 | lock
+ 0.00 | 149515 |   0.00 | hash
+ 0.00 | 148481 |   0.00 | unlock
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  75574 |   0.00 | SortedList_delete
+ 0.00 |     72 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## mutex (10k iterations, 8 threads, 16 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+69.25 |  72268 |  10.54 | SortedList_lookup
+28.25 |  69795 |   4.45 | SortedList_insert
+ 0.91 | 139169 |   0.07 | unlock
+ 0.00 | 142843 |   0.00 | lock
+ 0.00 | 140855 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  73017 |   0.00 | SortedList_delete
+ 0.00 |    139 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## mutex (10k iterations, 8 threads, 32 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+70.85 |  67002 |   6.13 | SortedList_lookup
+27.65 |  60891 |   2.63 | SortedList_insert
+ 0.00 | 129229 |   0.00 | lock
+ 0.00 | 127161 |   0.00 | hash
+ 0.00 | 125784 |   0.00 | unlock
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  68434 |   0.00 | SortedList_delete
+ 0.00 |    266 |   0.00 | SortedList_length
+-------------------------------------------
+## mutex (10k iterations, 8 threads, 64 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+58.47 |  48243 |   2.91 | SortedList_lookup
+37.59 |  48862 |   1.85 | SortedList_insert
+ 0.00 |  97830 |   0.00 | lock
+ 0.00 |  95855 |   0.00 | hash
+ 0.00 |  94576 |   0.00 | unlock
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  50184 |   0.00 | SortedList_delete
+ 0.00 |    516 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## spinlock (10k iterations, 8 threads, 1 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |ms/call |   name
+------+--------+--------+------------------
+89.76 | 152139 |   0.18 | lock
+ 6.00 |  79785 |   0.02 | SortedList_lookup
+ 4.36 |  73196 |   0.02 | SortedList_insert
+ 0.07 |      9 |   2.23 | SortedList_length
+ 0.00 | 159999 |   0.00 | unlock
+ 0.00 | 159985 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | SortedList_delete
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## spinlock (10k iterations, 8 threads, 2 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |ms/call |   name
+------+--------+--------+------------------
+97.14 | 153288 |   1.03 | lock
+ 1.94 |  78131 |   0.04 | SortedList_lookup
+ 1.14 |  75363 |   0.02 | SortedList_insert
+ 0.00 | 159306 |   0.00 | unlock
+ 0.00 | 159244 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  79794 |   0.00 | SortedList_delete
+ 0.00 |     17 |   0.00 | SortedList_length
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## spinlock (10k iterations, 8 threads, 4 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+84.60 | 151409 | 170.99 | lock
+11.43 |  73665 |  47.48 | SortedList_lookup
+ 4.09 |  70564 |  17.75 | SortedList_insert
+ 0.03 | 156016 |   0.06 | unlock
+ 0.03 | 155708 |   0.06 | hash
+ 0.03 |     34 | 294.79 | SortedList_length
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  78633 |   0.00 | SortedList_delete
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## spinlock (10k iterations, 8 threads, 8 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+49.76 | 146494 |  19.29 | lock
+34.76 |  65223 |  30.27 | SortedList_lookup
+15.35 |  62322 |  13.99 | SortedList_insert
+ 0.35 |     57 | 351.68 | SortedList_length
+ 0.00 | 147772 |   0.00 | unlock
+ 0.00 | 147200 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  74903 |   0.00 | SortedList_delete
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## spinlock (10k iterations, 8 threads, 16 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+44.27 | 129354 |   8.21 | lock
+38.00 |  57988 |  15.73 | SortedList_lookup
+17.12 |  56118 |   7.32 | SortedList_insert
+ 0.84 |    118 | 169.88 | SortedList_length
+ 0.00 | 134543 |   0.00 | unlock
+ 0.00 | 133934 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  69196 |   0.00 | SortedList_delete
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## spinlock (10k iterations, 8 threads, 32 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+41.68 |  53648 |   7.85 | SortedList_lookup
+39.69 | 111452 |   3.60 | lock
+16.87 |  48206 |   3.53 | SortedList_insert
+ 1.98 |    229 |  87.54 | SortedList_length
+ 0.00 | 114827 |   0.00 | unlock
+ 0.00 | 114640 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  61487 |   0.00 | SortedList_delete
+ 0.00 |      1 |   0.00 | parse
+-------------------------------------------
+## spinlock (10k iterations, 8 threads, 64 lists)
+------+--------+--------+------------------
+ %    |  num   | time   | function
+time  | calls  |us/call |   name
+------+--------+--------+------------------
+37.86 |  91951 |   1.85 | lock
+31.18 |  44435 |   3.16 | SortedList_lookup
+26.73 |  43317 |   2.78 | SortedList_insert
+ 4.45 |    480 |  41.76 | SortedList_length
+ 0.00 |  91161 |   0.00 | unlock
+ 0.00 |  90156 |   0.00 | hash
+ 0.00 |  80000 |   0.00 | rand_key
+ 0.00 |  49338 |   0.00 | SortedList_delete
+ 0.00 |      1 |   0.00 | parse
+------+--------+--------+------------------
+
+## Q2C.2A
+As the list value increases, the time per operation drops, because the time complexity of the lookup and insert operation is linear to the sublist size and the sublist size drops when list value increases. Also when list value increases with fixed threads, the possibility of contention also decreases, which results in less time per operation.
+
+## Q2C.2B
+Spinlock is slightly better than mutex. However, it's really hard to tell exactly why spinlock works better than mutex in this case. I did another experiment, where I define the spinlock variables in the .bss section, instead of dynamically allocate them via malloc(). In that experiment, spinlock was much slower than mutex. So the performance of spinlock has strong dependence on the memory.
+
+## Q2C.3A
+Because the thread needs exclusive access to the shared data associated with the condition variable. In section 30.1, the mutex is needed in order to gain exclusive access to "done" and "c" variables.
+
+## Q2C.3B
+The mutex must be released when the waiting thread is blocked, otherwise, no other thread would be able to acquire the lock in order to access the condition variable, which results in deadlock.
+
+## Q2C.3C
+When the thread wake up, it has to check the shared data again to find out whether the condition has been satisfied or not. Thus the mutex must be reacquired when the thread resumes in order to gain exclusive access to the shared data, e.g. the "done" variable in section 30.1.
+
+## Q2C.3D
+If the lock is released before the waiting thread calling pthread_cond_wait(), there is a chance that another thread calls pthread_cond_signal() right after the lock is released before the waiting thread becomes blocked. Then the waiting thread blocks itself and will possibly never be waken up.
+
+## Q2C.3E
+No. The unlock and wait operations must be atomic, so that no other thread can lock the mutex before the waiter has become blocked. To ensure the atomicity, pthread_cond_wait can only be implemented in kernel mode, via a system call.

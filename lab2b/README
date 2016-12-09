@@ -1,0 +1,22 @@
+name: Hanci Lyu
+UID: 004617230
+
+# File descriptions
+* lab2b.c is the C source code
+* SortedList.h and SortedList.c define and implement the doubly linked list functions
+* Makefile is used to built the program and distribution tarball
+* first_graph.png is the graph that shows the average time per operation vs the number of iterations
+* second_graph.png is the graph that shows the average time per operation vs the number of threads for different versions of protection.
+
+# Question answers
+## Q2B.1A
+The curve first drops. There is overhead in thread creations, which dominates the average cost when number of iterations is small. As the number of iterations increases, the overhead divided by number of iterations becomes small, so the curve drops. The curve goes up later. When the number of iterations is large, the estimated cost is approximately the cost of each insert/lookup+delete operation, and since the time complexity is O(n), linear to the number of iteration, so the curve goes up as the number of iteration increases.
+
+## Q2B.1B
+Increase the number of iterations and divide the time by the length of the linked list.
+
+## Q2B.2A
+1. The critical section in the linked list operations are larger than that of the add() function.
+2. The lock is held much longer during the list operations than in add() function.
+3. So in project2B, the probability of conflict is much higher for the same number of threads.
+4. More conflicts means more blocked threads, more overhead and less parallelism.

@@ -1,0 +1,9 @@
+name: Hanci Lyu
+UID: 004617230
+
+# File descriptions
+* lab3b.py is the python source code
+* Makefile is used to built the program and distribution tarball
+
+# How to run
+python lab3b.py

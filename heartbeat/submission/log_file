@@ -1,0 +1,30 @@
+Current settings: rate: 3, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 72.72' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 72.72' from server.
+Current settings: rate: 3, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 69.16' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 69.16' from server.
+Current settings: rate: 3, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 72.26' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 72.26' from server.
+Current settings: rate: 3, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 72.39' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 72.39' from server.
+Current settings: rate: 3, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 73.29' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 73.29' from server.
+Current settings: rate: 3, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 67.58' to server...
+New rate 1 received from server.
+Received message 'Heart rate of patient 131.179.10.179 is 67.58 new_rate: 1' from server.
+New rate 1 received from server.
+Received message 'Heart rate of patient 131.179.10.179 is 67.58 new_rate: 1' from server.
+Current settings: rate: 1, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 68.68' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 68.68' from server.
+Current settings: rate: 1, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 72.15' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 72.15' from server.
+Current settings: rate: 1, range: 4
+Sending message 'Heart rate of patient 131.179.10.179 is 68.22' to server...
+Received message 'Heart rate of patient 131.179.10.179 is 68.22' from server.

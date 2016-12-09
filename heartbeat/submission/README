@@ -1,0 +1,66 @@
+name: Hanci Lyu
+UID: 004617230
+
+# File descriptions
+* tls_client.c is the c source code
+* *.png are the screenshot required
+* log_file is the log file written by tls_client, which is a plain text file
+
+# Explanations
+--------------------------------------------
+##Part A: Investigating the Existing Implementation
+
+3) The heart rate and the ip address of the patient is sent to the server and server sends them back to the client. This data is very private, so it needs to be securely encrypted during transmission to the server. Also, we need to protect the data from being tampered by others.
+
+4d) The output shows the data of the UDP packet we sent to the server, as well as the ip address and port number of both client and the server. We can also directly see the content that contains patient IP and heart rate sent to the server, since they are raw characters and are not encrypted. This is not secure at all, since a packet sniffer can capture the packets and examine or even tamper the data transmitted between client and server freely.
+
+5b) The client receives a new rate setting message from the server and the client change its rate setting accordingly.
+
+5d) We can see a UDP packet sent from the 'set rate' command (131.179.10.179:54777) to the server, the content of the UDP packet contains 'IP: 131.179.10.179 new_rate: 5'. In response to that, the server send a UDP packet to the client (131.179.10.179:43061), which contains content like 'new_rate: 5', telling the client to change its rate.
+
+6b) The client receives a message from server saying 'New rate 15' and the client changes it rate to 15 accordingly.
+
+6d) We can see a UDP packet sent from the 'start_attack' command (131.179.10.179:36606) to the server, the content of the UDP packet contains 'IP: 131.179.10.179 new_rate: 15', which has the same format as that of the 'set_rate' command. Soon, the server sent a UDP packet to the client telling it the change the rate to 15. This means the 'start_attack' command fakes a set rate packet and sends to server, but the server repond to that request without carefully authenticate who initiate the set rate request.
+
+--------------------------------------------
+##Part B: Building a More Secure Implementation
+
+4) 'Heart rate of patient 131.179.10.179 is 72.72' is sent to the server, which includes the ip address of the client and the heart rate of the patient. In addition to showing what is sent to the server, the output also shows that the client establishes a secure connection to the server with AES256-SHA encryption and the server certificate descriptor is '/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd'.
+
+5d) We can see TCP packets between client (131.179.10.179:48892) and server (164.67.194.240:5000). However, the content of the packets are encrypted. We cannot see the actual content sending between client and server, thus TLS is much more secure than raw UDP.
+
+6b) After I execute the command './set-rate 5', the client receives a 'New rate 5' message from the server, and changes its rate to 5 accordingly. And now the messages returned from the server do not match messages sent to the server.
+
+6d) We can see TCP packets sent by the 'set-rate' command (131.179.10.179:48893) to the server and also TCP packets sent by server back to the 'set-rate' command. However, the content of the packets are encrypted and we cannot examine the actual message sent between them. Note that there are packets sent from the server back to the 'set-rate' command because TLS is based on TCP, so the server needs to send back acknowledgement packets to the 'set-rate' command.
+
+7b) The client just behaves as usual and keep its original rate, which means the attack fails.
+
+7d) We can see that the 'start_attack' command (131.179.10.179:38670) sends a UDP packet to the server. The content of the packet is 'IP: 131.179.10.179 new_rate: 15'. However, the attack does not work this time, since the server and the client are talking with TLS. The server cannot authenticate the UDP packet sent by 'start_attack'.
+
+--------------------------------------------
+##Part C: Building a More Secure Implementation with Capability for Resolving Error Behavior
+
+3) The client receives 'New rate 1' message from the server, and changes its rate to 1 accordingly. Since we include a new thread dedicating to do the reading, the messages returned from the server match the messages sent to the server by the client even after the client changes its rate.
+
+4) In the original single thread implementation, the client have to read and write synchronously. The client sends a messages and then blocking waits for a reponse. After the executing the 'set_rate' command, the server sends two messages to the client, but the client can only read one message at a time, thus the message sent and received by the client mismatch. In the dual thread implementation, the client can read and write asynchronously, which means the client can now read as many messages as it can and display them in the output, regardless of how often it writes messages. Thus, the messages sent and received by the client will not mismatch.
+
+6) 
+### Format of the log file
+* When client receives a message, it will output one line 
+  of log (MSG is the message received by client): 
+    
+    Received message 'MSG' from server.
+
+* When client sends a message, it will output two lines 
+  of log (RATE and RANGE are the current settings, MSG is the message):
+    
+    Current settings: rate: RATE, range RANGE
+    Sending message 'MSG' to server...
+
+* When client receives new rate from server, it will output 
+  one line of log (RATE is the new setting received from server):
+
+    New rate RATE received from server.  
+
+### Explanation of the log file
+The logs are quite straightforward. Before executing the 'set_rate' command, the client's rate is 3. After executing the 'set_rate' command, the client receives new rate settings from the server and changes its rate to 1. We can also see in the log that the messages sent and received by the client match with each other.

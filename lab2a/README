@@ -1,0 +1,39 @@
+name: Hanci Lyu
+UID: 004617230
+
+# File descriptions
+* lab2a.c is the C source code
+* Makefile is used to built the program and distribution tarball
+* time_vs_iteration.png is the graph that shows the average time per operation vs the number of iterations
+* time_vs_threads.png is the graph that shows the average time per operation vs the number of threads for all four versions of the add function
+
+# Question answers
+## Q2A.1A
+Because there is a high possibility that two threads go into the critical section in add() function in the same time. Then those two threads will get the same old value of counter, and counter will be incremented only once. However, counter should be incremented twice.
+
+## Q2A.1B
+When the number of iterations is small, a thread will finish all its work very soon so there is a low possibility that two threads will enter the critical section at the same time. Thus a significantly smaller number of iterations seldom fail.
+
+## Q2A.2A
+There is overhead in thread creations, which cannot be omitted when number of iterations is small. Suppose the total time for thread creations is Tp, the time for a single add() function call is Ta, the number of total operations is #ops, then the average cost per operation computed in the program is (Tp + Ta * #ops)/#ops = Tp/#ops + Ta. So as #iterations increases, #ops increases, and the average cost drops.
+
+## Q2A.2B
+Set the number of iterations to a significantly large number, then Tp/#ops + Ta will approximately equals to Ta, which is the “correct” cost.
+
+## Q2A.2C
+When a thread calls the pthread_yield() function, it will give out the cpu, and the scheduler will choose another thread to run. The pthread_yield() function is called every iteration, which incurs unnecessary context switch, so a large amount of extra time is spent in context switching.
+
+## Q2A.2D
+Theoretically, we could get valid timing if we could correctly measure the overhead of context switch incurred by calling the pthread_yield() function and subtract it from the timing. However, it’s hard to properly measure the time of context switch since the scheduling behavior of the operating system is rather indeterministic, and thus it’s not very possible to get valid timings if we are using yield.
+
+## Q2A.3A
+In the case of spin lock and pthread_mutex, the overhead spent in waiting for the lock is small since there is only a small number of threads waiting at the same time.
+In the case of compare_and_swap, the overhead spent in looping to update is small because there is low possibility that two threads will update the value of counter at the same time given a small number of threads.
+Thus all of the options perform similarly for low numbers of threads.
+
+## Q2A.3B
+In the case of spin lock and pthread_mutex, the overhead spent in waiting for the clock rises since there are many other threads waiting for the lock at the same time.
+In the case of compare_and_swap, the overhead spent in looping to update increases as we need to loop much more times until we update successfully given a large number of threads conflictingly updating the counter at the same time.
+
+## Q2A.3C
+When one thread holds the lock, all the other threads waiting for the lock have to waste cpu cycles in spinning until exhausting their time slices. When there is a large number of threads, most of the cpu cycles are wasted. Thus spin-locks are expensive in this situation.

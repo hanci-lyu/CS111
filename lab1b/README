@@ -1,0 +1,5 @@
+# File descriptions
+* client.c is the C source code for client
+* server.c is the C source code for server
+* Makefile is used to built the program and distribution tarball
+* my.key if the file to store the key used for encryption

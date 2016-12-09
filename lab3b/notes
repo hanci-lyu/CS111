@@ -1,0 +1,137 @@
+'''
+1.
+unallocated               indirect
+  block_num <- (inode_num, block_num, entry_num) * n
+'''
+
+'''
+2.
+duplicate
+block_num <- (inode_num, entry_num) * n
+'''
+
+'''
+3.
+unallocated
+  inode_num <- (directory_inode, entry_num) * n
+'''
+
+
+'''
+4.
+missing
+inode_num, block_num (free_list)
+'''
+
+'''
+5.
+linkcount
+inode, actual, expected
+'''
+
+'''
+6.
+
+'''
+
+# list
+inodeBitmapBlocks = []
+blockBitmapBlocks = []
+inodeFreeList = []
+blockFreeList = []
+
+# dicts
+inodeAllocated = {} # key: inode num, value: inode instance
+blockAllocated = {} # key: block num, value: block instance (0,1,2) blocks
+indirectTable = {} # key: (block num, entry num) # value ptr, 后面覆盖前面的
+directoryTable = {} # key: child inode, value : parent inode
+
+class Inode:
+    inodeNumber
+    referencedByList # list of tuple: [(directoryInode, entryNum)]
+    nlinks #number of links
+    ptrs #list
+
+class Block:
+    block_num
+    referencedByList #list of tuple [(inode, indirectBlockNum, entryNum)]
+
+# read csv
+# group: last 3 store to bitmap list
+# bitmap: check bitmapBlocks to see if is a inode/block
+# inode.csv: nlinks, ptrs -> inodeAllocated
+for the first 12
+    if blocknum == 0 or blocknum > maxblocknum:
+        INVALID_BLOCK_ERROR
+    else:
+        put blocknum to blockAllocated
+        entry_num: 0~11
+
+for remaining blocks:
+    if ptr[12] == 0 or > maxblocknum:
+        INVALID_BLOCK_ERROR
+    for oneblock in the indirectblock:
+        if indirectblocknum_entrynum(0-255) in indirectTable:
+            valid ptr, put in blockAllocated
+        else:
+            INVALID_BLOCK_ERROR
+
+
+
+# directory.csv
+# parentinode
+# entry_num
+# child inode number of the file entry
+for each entry:
+    if childinode != parentinode or parentinode == 2:
+        directoryTable[child] = parent # hard link for a directy:2
+    if childinode in inodeAllocated:
+        add(parentinode, entry_num) to referencedByList of child
+    else:
+        UNALLOCATED_INODE_ERROR
+
+# check .
+    if entry_num == 0 and child_inode != parentinode: # "."
+        INCORRECT_ENTRY_ERROR
+    elif entry_num == 1 and child_inode != directoryTable[parentinode]:
+        INCORRECT_ENTRY_ERROR
+
+
+
+# missing inode
+for each inode in inodeAllocated:
+    linkcount = len(inode.referencedByList)
+    if inode.number > 10 and linkcount == 0: # first ten are reserved
+        MISSING_INODE_ERROR
+    elif linkcount != inode.nlinks:
+        INCORRECT_LINK_COUNT_ERROR
+        is <nlinks> should be <linkcount>
+
+
+for inode X in inodeFreeList intersect inodeAllocated: # really? no dir here
+    UNALLOCATED_INODE_ERROR
+
+for x in range [11, max inode number]:
+    if x not in free_list and x not in inodeAllocated:
+        MISSING_INODE_ERROR
+
+for block b in blockAllocated:
+    if len(block.referencedByList) > 1: # multiple reference
+        MULTIPLE_REF_ERROR
+
+for x in blockFreeList intersect blockAllocated:
+    UNALLOCATED_BLOCK_ERROR
+
+
+
+
+
+
+
+
+
+
+
+
+
+

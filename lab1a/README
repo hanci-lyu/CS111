@@ -1,0 +1,7 @@
+# File descriptions
+* lab1a.c is the C source code
+* Makefile is used to built the program and distribution tarball
+
+# Reference
+* manual pages for the system calls
+* waitpid(2) examples (https://www.ibm.com/support/knowledgecenter/SSB23S_1.1.0.12/gtpc2/cpp_waitpid.html)
